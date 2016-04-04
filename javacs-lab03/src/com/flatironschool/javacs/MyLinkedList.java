@@ -86,6 +86,19 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public void add(int index, E element) {
 		// TODO: fill this in
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+		Node node = head;
+		if (index == 0) {
+			head = new Node(element, node);
+		} else {
+			for (int i = 0; i < index - 1; i++) {
+				node = node.next;
+			}
+			node.next = new Node(element, node.next);
+		}
+		size++;
 	}
 
 	@Override
@@ -146,7 +159,15 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		// TODO: fill this in
+		Node node = head;
+		int counter = 0;
+		while (node != null) {
+			if (equals(node.cargo, target)) {
+				return counter;
+			}
+			counter++;
+			node = node.next;
+		}
 		return -1;
 	}
 
@@ -202,6 +223,19 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public boolean remove(Object obj) {
 		// TODO: fill this in
+		Node node = head;
+		if (equals(node.cargo, obj)) {
+			head = head.next;
+			size--;
+			return true;
+		}
+		for (int i = 0; i < size - 1; i++) {
+			if (equals(node.next.cargo, obj)) {
+				node.next = node.next.next;
+				size--;
+				return true;
+			}
+		}
 		return false;
 	}
 
